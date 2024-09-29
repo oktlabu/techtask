@@ -74,40 +74,6 @@ stages:
             containerRegistry: 'dev-container-registry'
             repository: '$(repo_name)'
             tags: '$(tag_name)'
-    #jobs:
-    #  - job: BuildAndPushDocker
-    #    displayName: 'Build and Push Docker Image'
-    #    steps:
-    #    - script: |
-    #        echo $(acr-password-dev) | docker login $(acr-username-dev).azurecr.io --username $(acr-username-dev) --password-stdin
-    #      displayName: 'Login to Azure Container Registry'
-
-    #    - task: Docker@2
-    #      displayName: 'Build and Push Docker Image'
-    #      inputs:
-    #        containerRegistry: '$(acr-username-dev).azurecr.io'  # Use your ACR login server
-    #        repository: '$(repo_name)'                        # Reference the variable here
-    #        tags: '$(tag_name)'                              # Reference the variable here
-    #        command: 'buildAndPush'
-    #        dockerfile: '**/Dockerfile'                       # Specify the path to your Dockerfile
-    #        buildContext: '$(Build.SourcesDirectory)'        # Set the build context (optional)
-
-    #jobs:
-    #  - job: BuildAndPush
-    #    displayName: 'Build and Push Docker Image'
-    #    steps:
-    #      - script: |
-    #          echo "Logging in to Azure Container Registry"
-    #          az login --service-principal --username $(app_id) --tenant $(tenant_id)  --password $(app_secret)
-    #          az acr login --name risktecconregdev
-    #          echo "Building Docker image"
-    #          ls
-    #          docker build -t $(repo_name):$(tag_name)
-    #          echo "Tagging the image for ACR"
-    #          docker tag $(repo_name):$(tag_name) $(acr-username-dev).azurecr.io/$(repo_name):$(tag_name)
-    #          echo "Pushing Docker image to ACR"
-    #          docker push $(acr-username-dev).azurecr.io/$(repo_name):$(tag_name)
-    #        displayName: 'Build and Push Docker Image'
   
   - stage: AllTerraformExecution
     displayName: 'Run Terraform and Create Resources'
